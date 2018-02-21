@@ -17,6 +17,7 @@ var canvasArray;
 
 const BLACK = 0;
 const WHITE = 1;
+const PERMANENT = 2;
 
 function initializeCanvas() {
 
@@ -44,7 +45,7 @@ function updateCanvas() {
     canvasContext.fillStyle = 'white';
     for (var i = 0; i < canvasWidth; i++) {
         for (var j = 0; j < canvasHeight; j++) {
-            if (canvasArray[i][j] == WHITE) {
+            if (canvasArray[i][j] != BLACK) {
                 canvasContext.fillRect(i, j, 1, 1);
             }
         }

@@ -14,13 +14,16 @@ class Point {
 
     constructor(x, y, color) {
 
-        this.x = x;
-        this.y = y;
+        this.x = Math.trunc(x);
+        this.y = Math.trunc(y);
 
     }
 
     store(color) {
-        canvasArray[Math.trunc(this.x)][Math.trunc(this.y)] = color;
+
+        if (canvasArray[this.x][this.y] != PERMANENT) {
+            canvasArray[this.x][this.y] = color;
+        }
     }
 
 }

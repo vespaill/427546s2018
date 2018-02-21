@@ -31,9 +31,7 @@ function handleMouseMove(evt) {
         ls1.store(WHITE);
         updateCanvas();
         ls1.delete();
-        console.log('mouse move inside loop');
     }
-    console.log('mouse move outside loop');
 
 }
 
@@ -57,10 +55,9 @@ function handleMouseClick(evt) {
     if (ptrArCounter == 2) {
         ptrArCounter = 0;
         var ls1 = new LineSegment(twoPointsArray[0], twoPointsArray[1] );
-        ls1.store(WHITE);
+        ls1.store(PERMANENT);
     }
 
     updateCanvas();
-    console.log('mouse click');
 
 }
