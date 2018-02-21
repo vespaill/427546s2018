@@ -28,7 +28,7 @@ function handleMouseMove(evt) {
         var p1 = new Point(twoPointArray[0].x, twoPointArray[0].y);
         var p2 = new Point(mousePoint.x, mousePoint.y);
         var ls1 = new LineSegment(p1, p2);
-        ls1.store(WHITE);
+        ls1.store(WHITE, !permanent);
         updateCanvas();
         ls1.delete();
     }
@@ -48,15 +48,13 @@ function getMousePoint(evt) {
 
 function handleMouseClick(evt) {
 
-    var mousePoint = getMousePoint(evt);
-
-    twoPointArray[counter++] = mousePoint;
+    twoPointArray[counter++] = getMousePoint(evt);
 
     if (counter == 2) {
         counter = 1;
         swap();
-        var ls1 = new LineSegment(twoPointArray[0], twoPointArray[1] );
-        ls1.store(PERMANENT);
+        var ls1 = new LineSegment(twoPointArray[0], twoPointArray[1]);
+        ls1.store(WHITE, permanent);
     }
 
     updateCanvas();

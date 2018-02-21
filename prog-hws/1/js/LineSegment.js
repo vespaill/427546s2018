@@ -13,9 +13,11 @@ pointArray=[];
 class LineSegment {
 
     getDistance() {
-
         return (Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy, 2)));
+    }
 
+    getMidpoint() {
+        return new Point((this.p1.x + this.p2.x)/2, (this.p1.y + this.p2.y)/2);
     }
 
     constructor(p1, p2) {
@@ -25,32 +27,38 @@ class LineSegment {
 
         this.dx = this.p2.x - this.p1.x;
         this.dy = this.p2.y - this.p1.y;
-        this.distance = this.getDistance();
 
     }
 
-    store(color) {
+    store(color, status) {
 
         var x = this.p1.x;
         var y = this.p1.y;
         var intervals = this.getDistance();
         var xInc = this.dx / intervals;
         var yInc = this.dy / intervals;
+        var newPnt;
 
         for (var i = 0; i < intervals; i++) {
-            var newPnt = new Point(x, y);
+            newPnt = new Point(x, y);
             pointArray.push(newPnt);
-            newPnt.store(color);
+            newPnt.store(color, status);
             x += xInc;
             y += yInc;
         }
+
+        newPnt = this.getMidpoint();
+        pointArray.push(newPnt);
+
+        var midPntStatus = (status == permanent)? overwrite : status;
+        newPnt.store(RED, midPntStatus);
 
     }
 
     delete() {
 
         for (var i = 0; i < pointArray.length; i++) {
-            pointArray[i].store(BLACK);
+            pointArray[i].store(BLACK, !permanent);
         }
         pointArray=[];
 

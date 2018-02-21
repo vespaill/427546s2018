@@ -9,6 +9,7 @@ Point.js:
 *******************************************************************************/
 
 const pixelWidth = 1
+const midPointSize = 10
 
 class Point {
 
@@ -19,11 +20,14 @@ class Point {
 
     }
 
-    store(color) {
+    store(color, status) {
 
-        if (canvasArray[this.x][this.y] != PERMANENT) {
-            canvasArray[this.x][this.y] = color;
+        if (status == overwrite) {
+            canvasArray[this.x][this.y] = new Pixel(color, permanent);
+        } else if (canvasArray[this.x][this.y].status != permanent) {
+            canvasArray[this.x][this.y] = new Pixel(color, status);
         }
+
     }
 
 }
