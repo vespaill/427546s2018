@@ -8,7 +8,7 @@ COMP 4270
 LineSegment.js:
 *******************************************************************************/
 
-ARR=[];
+pointArray=[];
 
 class LineSegment {
 
@@ -39,7 +39,7 @@ class LineSegment {
 
         for (var i = 0; i < intervals; i++) {
             var newPnt = new Point(x, y);
-            ARR.push(newPnt);
+            pointArray.push(newPnt);
             newPnt.store(color);
             x += xInc;
             y += yInc;
@@ -49,10 +49,10 @@ class LineSegment {
 
     delete() {
 
-        for (var i = 0; i < ARR.length; i++) {
-            ARR[i].store(BLACK);
+        for (var i = 0; i < pointArray.length; i++) {
+            pointArray[i].store(BLACK);
         }
-        ARR=[];
+        pointArray=[];
 
     }
 

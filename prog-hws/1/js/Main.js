@@ -8,8 +8,8 @@ COMP 4270
 Main.js:
 *******************************************************************************/
 
-var twoPointsArray = [];
-var ptrArCounter = 0;
+var twoPointArray = [];
+var counter = 0;
 
 window.onload = function() {
 
@@ -23,9 +23,9 @@ window.onload = function() {
 
 function handleMouseMove(evt) {
 
-    if (ptrArCounter == 1) {
+    if (counter == 1) {
         var mousePoint = getMousePoint(evt);
-        var p1 = new Point(twoPointsArray[0].x, twoPointsArray[0].y);
+        var p1 = new Point(twoPointArray[0].x, twoPointArray[0].y);
         var p2 = new Point(mousePoint.x, mousePoint.y);
         var ls1 = new LineSegment(p1, p2);
         ls1.store(WHITE);
@@ -50,14 +50,23 @@ function handleMouseClick(evt) {
 
     var mousePoint = getMousePoint(evt);
 
-    twoPointsArray[ptrArCounter++] = mousePoint;
+    twoPointArray[counter++] = mousePoint;
 
-    if (ptrArCounter == 2) {
-        ptrArCounter = 0;
-        var ls1 = new LineSegment(twoPointsArray[0], twoPointsArray[1] );
+    if (counter == 2) {
+        counter = 1;
+        swap();
+        var ls1 = new LineSegment(twoPointArray[0], twoPointArray[1] );
         ls1.store(PERMANENT);
     }
 
     updateCanvas();
+
+}
+
+function swap() {
+
+    var temp = twoPointArray[0];
+    twoPointArray[0] = twoPointArray[1];
+    twoPointArray[1] = temp;
 
 }
