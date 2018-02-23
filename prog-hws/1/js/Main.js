@@ -8,29 +8,106 @@ COMP 4270
 Main.js:
 *******************************************************************************/
 
-var twoPointArray = [];
-var counter = 0;
+var pointArray = [];
+var lineArray = [];
+var timeout;
+var mouseStopTmpLine;
+var firstPointPlotted = false;
 
 window.onload = function() {
 
     initializeCanvas();
-    updateCanvas();
+
+    var framesPerSecond = 60;
+    setInterval(updateCanvas, 1000/framesPerSecond);
+
+
+}
+
+function updateCanvas() {
+
+    clearCanvas();
+    drawPoints();
+    drawLines();
 
     canvas.addEventListener('mousemove', handleMouseMove);
-    canvas.addEventListener('mousedown', handleMouseClick);
+
+    canvas.addEventListener('mousedown', pushCursorPoint);
+    storeLines();
+
+}
+
+function pushCursorPoint(evt) {
+
+    var newPnt = getMousePoint(evt);
+    pointArray.push(newPnt);
 
 }
 
 function handleMouseMove(evt) {
 
-    if (counter == 1) {
-        var mousePoint = getMousePoint(evt);
-        var p1 = new Point(twoPointArray[0].x, twoPointArray[0].y);
-        var p2 = new Point(mousePoint.x, mousePoint.y);
-        var ls1 = new LineSegment(p1, p2);
-        ls1.store(WHITE, !permanent);
-        updateCanvas();
-        ls1.delete();
+    restartTimer(evt);
+    drawLineToCursorPoint(evt);
+
+}
+
+function restartTimer (evt) {
+
+    clearTimeout(timeout);
+    timeout = setTimeout(handleMouseStop(evt), 1);
+
+}
+
+function handleMouseStop(evt){
+
+    if (firstPointPlotted) {
+        var startPoint = pointArray[pointArray.length-1];
+        var endPoint = getMousePoint(evt);
+        mouseStopTmpLine = new LineSegment(startPoint, endPoint);
+    }
+
+}
+
+function drawLineToCursorPoint(evt) {
+
+    if (pointArray.length < 1) return;
+    firstPointPlotted = true;
+    var startPoint = pointArray[pointArray.length-1];
+    var endPoint = getMousePoint(evt);
+    var tmpLine = new LineSegment(startPoint, endPoint);
+    tmpLine.draw('white');
+
+}
+
+
+
+function storeLines() {
+
+    var l = pointArray.length;
+
+    if (l > 1) {
+        var newLS = new LineSegment(pointArray[l-2], pointArray[l-1]);
+        lineArray.push(newLS);
+    }
+
+}
+
+function drawPoints() {
+
+    for (var i = 0; i < pointArray.length; i++) {
+        pointArray[i].draw('white');
+    }
+
+}
+
+function drawLines() {
+
+    for (var i = 0; i < lineArray.length; i++) {
+        lineArray[i].draw('white');
+    }
+
+    if (mouseStopTmpLine != null) {
+        mouseStopTmpLine.draw('white');
     }
 
 }
@@ -43,28 +120,5 @@ function getMousePoint(evt) {
     var mouseY = evt.clientY - rect.top - root.scrollTop;
 
     return new Point(mouseX, mouseY);
-
-}
-
-function handleMouseClick(evt) {
-
-    twoPointArray[counter++] = getMousePoint(evt);
-
-    if (counter == 2) {
-        counter = 1;
-        swap();
-        var ls1 = new LineSegment(twoPointArray[0], twoPointArray[1]);
-        ls1.store(WHITE, permanent);
-    }
-
-    updateCanvas();
-
-}
-
-function swap() {
-
-    var temp = twoPointArray[0];
-    twoPointArray[0] = twoPointArray[1];
-    twoPointArray[1] = temp;
 
 }

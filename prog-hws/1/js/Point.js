@@ -9,24 +9,24 @@ Point.js:
 *******************************************************************************/
 
 const pixelWidth = 1
-const midPointSize = 10
 
 class Point {
 
-    constructor(x, y, color) {
+    constructor(x, y) {
 
-        this.x = Math.trunc(x);
-        this.y = Math.trunc(y);
+        this.x = x;
+        this.y = y;
 
     }
 
-    store(color, status) {
+    print() {
+        console.log('(', this.x, ',', this.y, ')');
+    }
 
-        if (status == overwrite) {
-            canvasArray[this.x][this.y] = new Pixel(color, permanent);
-        } else if (canvasArray[this.x][this.y].status != permanent) {
-            canvasArray[this.x][this.y] = new Pixel(color, status);
-        }
+    draw(color) {
+
+        canvasContext.fillStyle = color;
+        canvasContext.fillRect(this.x, this.y, pixelWidth, pixelWidth);
 
     }
 
