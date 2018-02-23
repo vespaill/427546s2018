@@ -8,7 +8,7 @@ COMP 4270
 LineSegment.js:
 *******************************************************************************/
 
-pointArray=[];
+const UNDEFINED = -1;
 
 class LineSegment {
 
@@ -20,49 +20,57 @@ class LineSegment {
         return new Point((this.p1.x + this.p2.x)/2, (this.p1.y + this.p2.y)/2);
     }
 
+    getSlope() {
+
+        if (this.dx == 0) return UNDEFINED;
+        return (this.dy / this.dx);
+
+    }
+
+    getYintercept() {
+        return (this.p1.y - (this.slope * this.p1.x));
+    }
+
     constructor(p1, p2) {
 
         this.p1 = p1;
         this.p2 = p2;
-
         this.dx = this.p2.x - this.p1.x;
         this.dy = this.p2.y - this.p1.y;
+        this.slope = this.getSlope();
+        this.yIntercept = this.getYintercept();
+        this.distance = this.getDistance();
+        this.midpoint = this.getMidpoint();
 
     }
 
-    store(color, status) {
+    draw(color, drawMidpoint=false) {
 
+        // calculate absolute value of dx and dy
+        var absDx = Math.abs(this.dx);
+        var absDy = Math.abs(this.dy);
+
+        // calculate steps required for generating pixels
+        var steps = (absDx > absDy) ? absDx : absDy;
+
+        // calculate increment in x & y for each steps
+        var xInc = this.dx / steps;
+        var yInc = this.dy / steps;
+
+        // put pixel for each step, starting from first point
         var x = this.p1.x;
         var y = this.p1.y;
-        var intervals = this.getDistance();
-        var xInc = this.dx / intervals;
-        var yInc = this.dy / intervals;
-        var newPnt;
 
-        for (var i = 0; i < intervals; i++) {
-            newPnt = new Point(x, y);
-            pointArray.push(newPnt);
-            newPnt.store(color, status);
-            x += xInc;
-            y += yInc;
+        for (var i = 0; i <= steps; i++) {
+
+            new Point(x, y).draw(color);    // draw pixel at (x,y)
+            x += xInc;                      // increment in x at each step
+            y += yInc;                      // increment in y at each step
+
         }
 
-        newPnt = this.getMidpoint();
-        pointArray.push(newPnt);
-
-        var midPntStatus = (status == permanent)? overwrite : status;
-        newPnt.store(RED, midPntStatus);
+        if (drawMidpoint) this.midpoint.draw('red', 10);
 
     }
-
-    delete() {
-
-        for (var i = 0; i < pointArray.length; i++) {
-            pointArray[i].store(BLACK, !permanent);
-        }
-        pointArray=[];
-
-    }
-
 
 }

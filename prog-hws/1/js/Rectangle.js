@@ -10,14 +10,21 @@ Rectangle.js:
 
 class Rectangle {
 
-    constructor(l1, l2, l3, l4) {
+    constructor(llp, urp) {
 
-
+        this.llp = llp; // lower left point
+        this.urp = urp; // upper right point
+        this.ulp = new Point(llp.x, urp.y);
+        this.lrp = new Point(urp.x, llp.y);
 
     }
 
-    draw() {
+    draw(color, drawMidpoints=false) {
 
+        new LineSegment(this.llp, this.ulp).draw(color, drawMidpoints);
+        new LineSegment(this.ulp, this.urp).draw(color, drawMidpoints);
+        new LineSegment(this.urp, this.lrp).draw(color, drawMidpoints);
+        new LineSegment(this.lrp, this.llp).draw(color, drawMidpoints);
 
     }
 

@@ -9,25 +9,36 @@ Point.js:
 *******************************************************************************/
 
 const pixelWidth = 1
-const midPointSize = 10
 
 class Point {
 
-    constructor(x, y, color) {
+    constructor(x, y) {
 
-        this.x = Math.trunc(x);
-        this.y = Math.trunc(y);
+        this.x = x;
+        this.y = y;
+
+    }
+
+    print() {
+        console.log('(', this.x, ',', this.y, ')');
+    }
+
+    draw(color, size = pixelWidth) {
+
+        canvasContext.fillStyle = color;
+        canvasContext.fillRect(this.x-(size/2), this.y-(size/2), size, size);
 
     }
 
-    store(color, status) {
+}
 
-        if (status == overwrite) {
-            canvasArray[this.x][this.y] = new Pixel(color, permanent);
-        } else if (canvasArray[this.x][this.y].status != permanent) {
-            canvasArray[this.x][this.y] = new Pixel(color, status);
-        }
+function getMousePoint(evt) {
 
-    }
+    var rect = canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var mouseX = evt.clientX - rect.left - root.scrollLeft;
+    var mouseY = evt.clientY - rect.top - root.scrollTop;
+
+    return new Point(mouseX, mouseY);
 
 }
