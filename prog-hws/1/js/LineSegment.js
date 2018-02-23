@@ -21,8 +21,10 @@ class LineSegment {
     }
 
     getSlope() {
+
         if (this.dx == 0) return UNDEFINED;
         return (this.dy / this.dx);
+
     }
 
     getYintercept() {
@@ -44,31 +46,29 @@ class LineSegment {
 
     draw(color) {
 
-        // calculate dx & dy
-        var abs_dx = Math.abs(this.dx);
-        var abs_dy = Math.abs(this.dy);
+        // calculate absolute value of dx and dy
+        var absDx = Math.abs(this.dx);
+        var absDy = Math.abs(this.dy);
 
         // calculate steps required for generating pixels
-        var steps = abs_dx > abs_dy ? abs_dx : abs_dy;
+        var steps = (absDx > absDy) ? absDx : absDy;
 
         // calculate increment in x & y for each steps
-        var Xinc = this.dx / steps;
-        var Yinc = this.dy / steps;
+        var xInc = this.dx / steps;
+        var yInc = this.dy / steps;
 
-        // Put pixel for each step
-        var X = this.p1.x;
-        var Y = this.p1.y;
+        // put pixel for each step, starting from first point
+        var x = this.p1.x;
+        var y = this.p1.y;
 
-        for (var i = 0; i <= steps; i++)
-        {
-            new Point(X, Y).draw(color);  // put pixel at (X,Y)
-            X += Xinc;           // increment in x at each step
-            Y += Yinc;           // increment in y at each step
+        for (var i = 0; i <= steps; i++) {
+
+            new Point(x, y).draw(color);    // draw pixel at (x,y)
+            x += xInc;                      // increment in x at each step
+            y += yInc;                      // increment in y at each step
+
         }
 
     }
-
-
-
 
 }
