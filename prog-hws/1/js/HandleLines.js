@@ -58,8 +58,6 @@ function drawTmpLineToCursor(evt) {
     tmpLine = new LineSegment(p1, p2);
     tmpLine.draw('white');
 
-    new Rectangle(p1, p2).draw('blue');
-
 }
 
 function storeTmpLine() {
