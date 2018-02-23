@@ -10,25 +10,21 @@ Rectangle.js:
 
 class Rectangle {
 
-    constructor(p1, p2, p3, p4) {
+    constructor(llp, urp) {
 
-        this.pointArray = [];
-        this.pointArray.push(p1);
-        this.pointArray.push(p2);
-        this.pointArray.push(p3);
-        this.pointArray.push(p4);
-        this.numPoints = this.pointArray.length;
+        this.llp = llp; // lower left point
+        this.urp = urp; // upper right point
+        this.ulp = new Point(llp.x, urp.y);
+        this.lrp = new Point(urp.x, llp.y);
 
     }
 
-    draw(color, drawStrPnt=false, drawEndPnt=false, drawMidpoint=false) {
+    draw(color, drawMidpoints=false) {
 
-        for (var i = 0; i < this.numPoints; i++) {
-
-            new LineSegment(this.pointArray[i],
-                            this.pointArray[(i+1) % this.numPoints]).draw(color, drawStrPnt, drawEndPnt, drawMidpoint);
-
-        }
+        new LineSegment(this.llp, this.ulp).draw(color, drawMidpoints);
+        new LineSegment(this.ulp, this.urp).draw(color, drawMidpoints);
+        new LineSegment(this.urp, this.lrp).draw(color, drawMidpoints);
+        new LineSegment(this.lrp, this.llp).draw(color, drawMidpoints);
 
     }
 
