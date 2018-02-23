@@ -44,7 +44,7 @@ class LineSegment {
 
     }
 
-    draw(color) {
+    draw(color, drawStrPnt=false, drawEndPnt=false, drawMidpoint=false) {
 
         // calculate absolute value of dx and dy
         var absDx = Math.abs(this.dx);
@@ -61,6 +61,10 @@ class LineSegment {
         var x = this.p1.x;
         var y = this.p1.y;
 
+        if (drawStrPnt) {
+            this.p1.draw(color,5)
+        }
+
         for (var i = 0; i <= steps; i++) {
 
             new Point(x, y).draw(color);    // draw pixel at (x,y)
@@ -68,6 +72,12 @@ class LineSegment {
             y += yInc;                      // increment in y at each step
 
         }
+
+        if (drawEndPnt) {
+            this.p2.draw(color,5)
+        }
+
+        if (drawMidpoint) this.midpoint.draw('red', 10);
 
     }
 

@@ -23,11 +23,22 @@ class Point {
         console.log('(', this.x, ',', this.y, ')');
     }
 
-    draw(color) {
+    draw(color, size = pixelWidth) {
 
         canvasContext.fillStyle = color;
-        canvasContext.fillRect(this.x, this.y, pixelWidth, pixelWidth);
+        canvasContext.fillRect(this.x-(size/2), this.y-(size/2), size, size);
 
     }
+
+}
+
+function getMousePoint(evt) {
+
+    var rect = canvas.getBoundingClientRect();
+    var root = document.documentElement;
+    var mouseX = evt.clientX - rect.left - root.scrollLeft;
+    var mouseY = evt.clientY - rect.top - root.scrollTop;
+
+    return new Point(mouseX, mouseY);
 
 }
