@@ -8,7 +8,6 @@ COMP 4270
 HandleRectangles.js:
 *******************************************************************************/
 
-var pointArray = [];
 var recArray = [];
 var tmpRec;
 

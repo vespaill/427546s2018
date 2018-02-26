@@ -12,7 +12,7 @@ const UNDEFINED = -1;
 
 class LineSegment {
 
-    getDistance() {
+    getLength() {
         return (Math.sqrt(Math.pow(this.dx, 2) + Math.pow(this.dy, 2)));
     }
 
@@ -39,7 +39,7 @@ class LineSegment {
         this.dy = this.p2.y - this.p1.y;
         this.slope = this.getSlope();
         this.yIntercept = this.getYintercept();
-        this.distance = this.getDistance();
+        this.distance = this.getLength();
         this.midpoint = this.getMidpoint();
 
     }

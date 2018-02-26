@@ -9,6 +9,7 @@ Point.js:
 *******************************************************************************/
 
 const pixelWidth = 1
+var pointArray = [];
 
 class Point {
 
@@ -28,6 +29,14 @@ class Point {
         canvasContext.fillStyle = color;
         canvasContext.fillRect(this.x-(size/2), this.y-(size/2), size, size);
 
+    }
+
+}
+
+function drawPoints() {
+
+    for (var i = 0; i < pointArray.length; i++) {
+        pointArray[i].draw('white', 5);
     }
 
 }
