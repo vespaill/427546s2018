@@ -8,7 +8,6 @@ COMP 4270
 HandleLines.js:
 *******************************************************************************/
 
-var pointArray = [];
 var lineArray = [];
 var tmpLine;
 
@@ -19,14 +18,6 @@ function handleLines() {
     drawLines();
     canvas.addEventListener('mousemove', drawTmpLineToCursor);
     canvas.addEventListener('mousedown', handleMouseDownForLines);
-
-}
-
-function drawPoints() {
-
-    for (var i = 0; i < pointArray.length; i++) {
-        pointArray[i].draw('white', 5);
-    }
 
 }
 
